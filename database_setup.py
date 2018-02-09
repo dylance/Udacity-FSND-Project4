@@ -55,3 +55,5 @@ engine = create_engine('sqlite:///project1st.db')
 
 
 Base.metadata.create_all(engine)
+
+print "databse was set up"
