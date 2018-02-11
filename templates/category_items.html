@@ -1,0 +1,28 @@
+<html>
+
+<body>
+
+<h1>{{category.category}}</h1>
+
+<!-- single bracket is logical code. double bracket is printed code-->
+{% for i in items %}
+
+<div>
+
+<p>{{i.item}} - {{i.description}}</p>
+<!-- url for accepts function as first argument and arguments
+url for is useful because you don't have to remember to change url's all over application-->
+<a href='{{url_for('editItem', category_id = category.id, item_id = i.id) }}'>Edit</a>
+
+</br>
+
+<a href = '{{url_for('deleteItem', category_id = category.id, item_id = i.id) }}'>Delete</a>
+
+
+</div>
+
+<!-- end for indicates the end of a loop-->
+{% endfor %}
+</body>
+
+</html>
