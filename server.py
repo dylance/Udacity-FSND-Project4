@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items
@@ -55,15 +55,37 @@ def showCategories2():
 
 # Task 1: Create route for newMenuItem function here
 
-@app.route('/category/<int:category_id>/add/')
+
+@app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
 def newItem(category_id):
-    return "page to create a new menu item. Task 1 complete!"
+    if request.method == 'POST':
+        newItem = Items(
+            item=request.form['item'], category_id=category_id)
+        session.add(newItem)
+        session.commit()
+        return redirect(url_for('showCategories', category_id=category_id ))
+    else:
+        return render_template('newitem.html', category_id=category_id)
 
 # Task 2: Create route for editMenuItem function here
 
-@app.route('/category/<int:category_id>/<int:item_id>/edit/')
+@app.route('/category/<int:category_id>/<int:item_id>/edit/', methods=['GET', 'POST'])
 def editItem(category_id, item_id):
-    return "page to edit a item. Task 2 complete!"
+    editedItem = session.query(Items).filter_by(id = item_id).one()
+    if request.method== 'POST':
+        if request.form['item']:
+            editedItem.item = request.form['item']
+        session.add(editedItem)
+        session.commit()
+        return redirect(url_for('showCategories', category_id=category_id))
+    else:
+        return render_template('edititem.html', category_id=category_id, item_id = item_id, item = editedItem)
+
+
+
+
+
+
 
 # Task 3: Create a route for deleteMenuItem function here
 
