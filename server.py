@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items
@@ -63,6 +63,7 @@ def newItem(category_id):
             item=request.form['item'], category_id=category_id)
         session.add(newItem)
         session.commit()
+        flash("new item created!")
         return redirect(url_for('showCategories', category_id=category_id ))
     else:
         return render_template('newitem.html', category_id=category_id)
@@ -77,27 +78,31 @@ def editItem(category_id, item_id):
             editedItem.item = request.form['item']
         session.add(editedItem)
         session.commit()
+        flash("Item was edited!")
         return redirect(url_for('showCategories', category_id=category_id))
     else:
         return render_template('edititem.html', category_id=category_id, item_id = item_id, item = editedItem)
 
-
-
-
-
-
-
 # Task 3: Create a route for deleteMenuItem function here
 
-@app.route('/category/<int:category_id>/<int:item_id>/delete/')
+@app.route('/category/<int:category_id>/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
-    return "page to delete a menu item. Task 3 complete!"
+    itemToDelete = session.query(Items).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        flash("Item was deleted")
+        return redirect(url_for('showCategories', category_id=category_id))
+    else:
+        return render_template('deleteitem.html', category_id=category_id,item=itemToDelete)
+
 
 
 
 #the app run by python interpreter gets a variable set to __main__
 #imported python code gets named __<file name>__
 if __name__ == '__main__':
+    app.secret_key = 'secretkey'
     #allows server to reload itself each time it notices a code change
     #provides debugger in browser also
     app.debug = True
