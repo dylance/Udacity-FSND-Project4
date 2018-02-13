@@ -107,7 +107,6 @@ def restaurantMenuJSON(category_id):
     return jsonify(Items=[i.serialize for i in items])
 
 
-# ADD JSON ENDPOINT HERE
 @app.route('/category/<int:category_id>/<int:item_id>/JSON')
 def menuItemJSON(category_id, item_id):
     item = session.query(Items).filter_by(id=item_id).one()
