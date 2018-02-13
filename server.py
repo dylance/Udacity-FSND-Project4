@@ -98,6 +98,23 @@ def deleteItem(category_id, item_id):
 
 
 
+#JSON endpoints
+@app.route('/category/<int:category_id>/JSON')
+def restaurantMenuJSON(category_id):
+    category = session.query(Categories).filter_by(id=category_id).one()
+    items = session.query(Items).filter_by(
+        category_id=category.id).all()
+    return jsonify(Items=[i.serialize for i in items])
+
+
+# ADD JSON ENDPOINT HERE
+@app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/JSON')
+def menuItemJSON(restaurant_id, menu_id):
+    menuItem = session.query(MenuItem).filter_by(id=menu_id).one()
+    return jsonify(MenuItem=menuItem.serialize)
+
+
+
 
 #the app run by python interpreter gets a variable set to __main__
 #imported python code gets named __<file name>__
