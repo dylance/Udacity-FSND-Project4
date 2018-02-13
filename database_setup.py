@@ -25,8 +25,20 @@ class Items(Base):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(Categories)
 
+    # this serialize function makes us able to send JSON objects in a
+    # serializable format
+    @property
+    def serialize(self):
 
-engine = create_engine('sqlite:///project2nd.db')
+        return {
+            'item': self.item,
+            'description': self.description,
+            'id': self.id,
+
+        }
+
+
+engine = create_engine('sqlite:///project3rd.db')
 
 
 Base.metadata.create_all(engine)

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items
@@ -13,7 +13,7 @@ APPLICATION_NAME = "Item Catalog"
 
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///project2nd.db')
+engine = create_engine('sqlite:///project3rd.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
