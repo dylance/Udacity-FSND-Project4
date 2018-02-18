@@ -135,12 +135,17 @@ def showLogin():
     print "The current session state is %s" % login_session['state']
     return render_template('login.html',  STATE=state)
 
+# Show all restaurants
+@app.route('/')
+@app.route('/categories/')
+def showCategories():
+    categories = session.query(Categories).all()
+    return render_template('categories.html', categories=categories)
 
 #python decorator
 #our function gets wrapped inside the @app.route function
-@app.route('/')
 @app.route('/category/<int:category_id>/')
-def showCategories(category_id):
+def showCategory(category_id):
 
     category = session.query(Categories).filter_by(id=category_id).one()
     items = session.query(Items).filter_by(category_id=category.id)
@@ -180,7 +185,7 @@ def newItem(category_id):
         session.add(newItem)
         session.commit()
         flash("new item created!")
-        return redirect(url_for('showCategories', category_id=category_id ))
+        return redirect(url_for('showCategory', category_id=category_id ))
     else:
         return render_template('newitem.html', category_id=category_id)
 
@@ -195,7 +200,7 @@ def editItem(category_id, item_id):
         session.add(editedItem)
         session.commit()
         flash("Item was edited!")
-        return redirect(url_for('showCategories', category_id=category_id))
+        return redirect(url_for('showCategory', category_id=category_id))
     else:
         return render_template('edititem.html', category_id=category_id, item_id = item_id, item = editedItem)
 
@@ -208,7 +213,7 @@ def deleteItem(category_id, item_id):
         session.delete(itemToDelete)
         session.commit()
         flash("Item was deleted")
-        return redirect(url_for('showCategories', category_id=category_id))
+        return redirect(url_for('showCategory', category_id=category_id))
     else:
         return render_template('deleteitem.html', category_id=category_id,item=itemToDelete)
 
