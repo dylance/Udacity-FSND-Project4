@@ -35,7 +35,8 @@ def showLogin():
                     for x in xrange(32))
     login_session['state'] = state
     print login_session
-    return "The current session state is %s" % login_session['state']
+    print "The current session state is %s" % login_session['state']
+    return render_template('login.html', , STATE=state)
 
 
 #python decorator
