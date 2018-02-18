@@ -3,7 +3,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items
 
-
+#imports for creating log in
+# session is renamed login_session because we already have an instance of session
+#session works like a dictionary to store values for as long as a session with a server exists
+from flask import session as login_session
+import random
+import string
 #name of running application is argument
 #find out more about __name__ in python
 #anytime run an app in python __name__ gets run and used for app and all imports used
@@ -18,6 +23,19 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+# Create anti-forgery state token to ensure the the actual user is making requests
+# Used to make sure user and login sessions have same state variable
+# when a user tries to authenticate
+@app.route('/login')
+def showLogin():
+    print "the current login session sate is: %s" % login_session
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
+    print login_session
+    return "The current session state is %s" % login_session['state']
 
 
 #python decorator
