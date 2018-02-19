@@ -37,7 +37,6 @@ of the login.html page-->
 
           <div id="signinButton">
           <span class="g-signin"
-
             data-scope="openid email"
             data-clientid="524229327598-hi7c7je2motn9uck4j1u7sfcgr714942.apps.googleusercontent.com"
             data-redirecturi="postmessage"
@@ -52,10 +51,15 @@ of the login.html page-->
 
         <script>
         function signInCallback(authResult) {
+          //authResult is object returned from google after user is authenticated
+          //printed auth result to console
+          console.log("the auth result is: ")
+          console.log(authResult)
+          //authorization was successful if contains authResult contains code parameter
           if (authResult['code']) {
             // Hide the sign-in button now that the user is authorized
             $('#signinButton').attr('style', 'display: none');
-            // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+            // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main categories page
             $.ajax({
               type: 'POST',
               url: '/gconnect?state={{STATE}}',
@@ -68,7 +72,7 @@ of the login.html page-->
                   $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
                  setTimeout(function() {
                   window.location.href = "/categories";
-                 }, 4000);
+                }, 1000);
 
               } else if (authResult['error']) {
             console.log('There was an error: ' + authResult['error']);

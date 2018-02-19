@@ -38,6 +38,19 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+# Create anti-forgery state token to ensure the the actual user is making requests
+# Used to make sure user and login sessions have same state variable
+# when a user tries to authenticate
+@app.route('/login')
+def showLogin():
+    print "the current login session state is: %s" % login_session
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
+    print login_session
+    print "The current session state is %s" % (login_session['state'])
+    return render_template('login.html',  STATE=state)
+
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     # Validate state token
@@ -151,20 +164,9 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-# Create anti-forgery state token to ensure the the actual user is making requests
-# Used to make sure user and login sessions have same state variable
-# when a user tries to authenticate
-@app.route('/login')
-def showLogin():
-    print "the current login session sate is: %s" % login_session
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in xrange(32))
-    login_session['state'] = state
-    print login_session
-    print "The current session state is %s" % login_session['state']
-    return render_template('login.html',  STATE=state)
 
-# Show all restaurants
+
+# Show all categories
 @app.route('/')
 @app.route('/categories/')
 def showCategories():
