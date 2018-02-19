@@ -12,10 +12,14 @@ import string
 
 
 # Imports for gonnect
+#flow_from_clientsecrets creates a flow object from clientsecrets JSON file
+#stores client ID and client secretsecret
 from oauth2client.client import flow_from_clientsecrets
+#used if run into an error exchanging auth. code for access token
 from oauth2client.client import FlowExchangeError
 import httplib2
 import json
+#converts return value from function into response object that can be sent to client
 from flask import make_response
 import requests
 
@@ -210,6 +214,9 @@ def showCategories2():
 
 @app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
 def newItem(category_id):
+    #checks to see if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         newItem = Items(
             item=request.form['item'], category_id=category_id)
@@ -224,6 +231,9 @@ def newItem(category_id):
 
 @app.route('/category/<int:category_id>/<int:item_id>/edit/', methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    #checks to see if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     editedItem = session.query(Items).filter_by(id = item_id).one()
     if request.method== 'POST':
         if request.form['item']:
@@ -239,6 +249,9 @@ def editItem(category_id, item_id):
 
 @app.route('/category/<int:category_id>/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
+    #checks to see if user is logged in
+    if 'username' not in login_session:
+        return redirect('/login')
     itemToDelete = session.query(Items).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
