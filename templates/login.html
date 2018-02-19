@@ -21,10 +21,23 @@ of the login.html page-->
 
 
 <!-- GOOGLE PLUS SIGN IN BUTTON-->
+          <!-- -data-scope specefies what resources we want to be able to access. check google documentation for openid for more info
 
+          -data-redirecturi sets a post message which enables one time use
+
+          -data-accesstype lets google make requests when user is not logged in
+
+          -data-cookiepolicy - means we only have one domain and no subdomains
+
+          -data-callback - gives one time use code and acces token
+
+          -data-approvalprompt means user has to login each time they enter login page. only good for testing
+
+        -->
 
           <div id="signinButton">
           <span class="g-signin"
+
             data-scope="openid email"
             data-clientid="524229327598-hi7c7je2motn9uck4j1u7sfcgr714942.apps.googleusercontent.com"
             data-redirecturi="postmessage"
