@@ -5,6 +5,8 @@
 <body>
 
 <h1>{{category.category}}</h1>
+<a href = '{{url_for('newItem', category_id = category.id) }}'>
+Create New Item</a>
 
 <!--MESSAGE FLASHING EXAMPLE -->
 {% with messages = get_flashed_messages() %}
@@ -26,9 +28,8 @@
 <p>{{i.item}} - {{i.description}}</p>
 <!-- url for accepts function as first argument and arguments
 url for is useful because you don't have to remember to change url's all over application-->
-<a href = '{{url_for('newItem', category_id = category.id) }}'>
-Create New Item</a>
-</br>
+
+
 <a href='{{url_for('editItem', category_id = category.id, item_id = i.id) }}'>Edit</a>
 
 </br>
