@@ -222,6 +222,28 @@ def newCategory():
     else:
         return render_template('newcategory.html')
 
+@app.route('/category/<int:category_id>/edit/', methods=['GET', 'POST'])
+def editCategory(category_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+    editedCategory = session.query(Categories).filter_by(id = category_id).one()
+    if request.method == 'POST':
+        if request.form['category']:
+            editedCategory.category = request.form['category']
+            editedCategory.description = request.form['description']
+        session.add(editedCategory)
+        session.commit()
+        flash("Category was edited")
+        return redirect(url_for('showCategories'))
+    else:
+        return render_template('editcategory.html', category_id=editedCategory.id, category=editedCategory)
+
+
+
+
+
+
+
 
 
 
@@ -247,8 +269,9 @@ def editItem(category_id, item_id):
     #checks to see if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
-    editedItem = session.query(Items).filter_by(id = item_id).one()
+
     if request.method== 'POST':
+        editedItem = session.query(Items).filter_by(id = category_id).one()
         if request.form['item']:
             editedItem.item = request.form['item']
         session.add(editedItem)
@@ -256,7 +279,7 @@ def editItem(category_id, item_id):
         flash("Item was edited!")
         return redirect(url_for('showCategory', category_id=category_id))
     else:
-        return render_template('edititem.html', category_id=category_id, item_id = item_id, item = editedItem)
+        return render_template('edititem.html', category_id=category_id, item_id = item_id)
 
 # Task 3: Create a route for deleteMenuItem function here
 
