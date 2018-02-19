@@ -232,7 +232,7 @@ def newItem(category_id):
         return redirect('/login')
     if request.method == 'POST':
         newItem = Items(
-            item=request.form['item'], category_id=category_id)
+            item=request.form['item'], category_id=category_id, description=request.form['description'])
         session.add(newItem)
         session.commit()
         flash("new item created!")
