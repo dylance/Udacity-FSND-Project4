@@ -209,7 +209,20 @@ def showCategories2():
         output += '</br>'
     return output
 
-# Task 1: Create route for newMenuItem function here
+@app.route('/category/new/', methods=['GET', 'POST'])
+def newCategory():
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        newCategory = Categories(category=request.form['category'], description=request.form['description'])
+        session.add(newCategory)
+        session.commit()
+        flash("new category created!")
+        return redirect(url_for('showCategories'))
+    else:
+        return render_template('newcategory.html')
+
+
 
 
 @app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
