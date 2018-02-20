@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, Items
+from database_setup import Base, Categories, Items, User
 
 #imports for creating log in
 # session is renamed login_session because we already have an instance of session
@@ -35,7 +35,7 @@ APPLICATION_NAME = "Item Application"
 
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///project3rd.db')
+engine = create_engine('sqlite:///db-with-user.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -127,6 +127,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    #see if user exists, if it doesn't make a new one
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -167,6 +173,31 @@ def gdisconnect():
         response = make_response(json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
+# User Helper Functions
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
 
 
 
@@ -214,7 +245,9 @@ def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newCategory = Categories(category=request.form['category'], description=request.form['description'])
+        #printed login_session object to look at it :)
+        print login_session
+        newCategory = Categories(category=request.form['category'], description=request.form['description'],user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         flash("new category created!")
