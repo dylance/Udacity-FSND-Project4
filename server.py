@@ -238,6 +238,22 @@ def editCategory(category_id):
     else:
         return render_template('editcategory.html', category_id=editedCategory.id, category=editedCategory)
 
+@app.route('/category/<int:category_id>/delete/', methods=['GET', 'POST'])
+def deleteCategory(category_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+    categoryToDelete = session.query(Categories).filter_by(id = category_id).one()
+    if request.method == 'POST':
+        session.delete(categoryToDelete)
+        session.commit()
+        flash("Category was deleted")
+        return redirect(url_for('showCategories'))
+    else:
+        return render_template('deletecategory.html', category_id=categoryToDelete.id, category=categoryToDelete)
+
+
+
+
 
 
 
