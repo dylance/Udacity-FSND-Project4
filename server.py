@@ -217,8 +217,13 @@ def showCategories():
 def showCategory(category_id):
 
     category = session.query(Categories).filter_by(id=category_id).one()
+    creator = getUserInfo(category.user_id)
     items = session.query(Items).filter_by(category_id=category.id)
-    return render_template('category_items.html', category=category, items=items)
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publiccategory_items.html',category=category, items=items, creator=creator)
+    else:
+        return render_template('category_items.html', category=category, items=items, creator=creator)
+
 
     #look up query method for sql alchemy. dbSession.query
     #query to view items from category with custom url
@@ -263,6 +268,8 @@ def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedCategory = session.query(Categories).filter_by(id = category_id).one()
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['category']:
             editedCategory.category = request.form['category']
@@ -279,6 +286,8 @@ def deleteCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     categoryToDelete = session.query(Categories).filter_by(id = category_id).one()
+    if categoryToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
