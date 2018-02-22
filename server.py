@@ -297,17 +297,6 @@ def deleteCategory(category_id):
         return render_template('deletecategory.html', category_id=categoryToDelete.id, category=categoryToDelete)
 
 
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
 def newItem(category_id):
     #checks to see if user is logged in
@@ -330,9 +319,11 @@ def editItem(category_id, item_id):
     #checks to see if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
-
+    editedItem = session.query(Items).filter_by(id=item_id).one()
+    category = session.query(Categories).filter_by(id=category_id).one()
+    if login_session['user_id'] != category.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method== 'POST':
-        editedItem = session.query(Items).filter_by(id = category_id).one()
         if request.form['item']:
             editedItem.item = request.form['item']
         session.add(editedItem)
@@ -340,7 +331,11 @@ def editItem(category_id, item_id):
         flash("Item was edited!")
         return redirect(url_for('showCategory', category_id=category_id))
     else:
-        return render_template('edititem.html', category_id=category_id, item_id = item_id)
+        return render_template('edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
+
+
+
+
 
 # Task 3: Create a route for deleteMenuItem function here
 
@@ -350,6 +345,9 @@ def deleteItem(category_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     itemToDelete = session.query(Items).filter_by(id=item_id).one()
+    category = session.query(Categories).filter_by(id=category_id).one()
+    if login_session['user_id'] != category.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
