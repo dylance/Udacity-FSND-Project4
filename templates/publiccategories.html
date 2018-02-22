@@ -1,0 +1,25 @@
+
+{% block content %}
+
+
+			<h1>Categories</h1>
+      <a href = '{{url_for('newCategory') }}'>
+      Create New Category</a>
+
+
+
+
+
+
+	{% for category in categories %}
+		<a href = "{{url_for('showCategory', category_id = category.id)}}">
+
+
+						<h3>{{category.category}}</h3></a>
+            <p>{{category.description}}</p>
+
+
+
+    </br>
+	{% endfor %}
+{% endblock %}
