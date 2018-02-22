@@ -206,7 +206,10 @@ def getUserID(email):
 @app.route('/categories/')
 def showCategories():
     categories = session.query(Categories).all()
-    return render_template('categories.html', categories=categories)
+    if 'username' not in login_session:
+        return render_template('publiccategories.html', categories=categories)
+    else:
+        return render_template('categories.html', categories=categories)
 
 #python decorator
 #our function gets wrapped inside the @app.route function
