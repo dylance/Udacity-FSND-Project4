@@ -1,73 +1,107 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
 body {
-    font-family: sans-serif;
-    background-color: #333333
-}
-
-h1,
-h2,
-h3,
-h4 {
-    color: #ffffff;
-}
-
-h1,
-h2 {
-    font-family: 'georgia', serif;
-    margin: 0;
-}
-
-h1 {
-    border-bottom: 2px solid #eee;
-}
-
-h2 {
-    font-size: 1.2em;
-}
-
-p,
-dd,
-dt {
-    color: #cccccc;
-}
-
-a {
-    text-decoration: none;
-    color: #ffffcc;
-    font-size: .75em;
-}
-
-.pane {
-    position: absolute;
-    left: 25%;
-    border: 2px solid;
-    border-radius: 25px;
-    padding: 5px;
-    margin: 5px;
-    border-color: #999999;
-    background-color: #333333
-}
-
-.header {
-    left: 50%;
-    text-align: center;
-}
-
-.name {
-    width: 50%;
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
     display: inline-block;
-    float: left;
+}
+.header-page{
+  border-bottom: 1px solid #a6a6a6;
+  padding-bottom:2px;
+  margin:15px 0 15px;
+}
+.head-image {
+  padding-top: 15px;
+  padding-bottom: 30px;
+}
+.head-title {
+  text-align: right;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+}
+.main-img{
+  opacity: .9;
+}
+.main-img:focus,.main-img:hover{opacity:1;border:none;cursor:pointer;}
+.hero-img {
+  height: auto;
+  margin: 0;
+}
+/*Work-Header: undocumented class*/
+.project-img{
+  border-radius: 10px;
+  padding: 8px 8px 8px 8px;
+  width: 100%;
+  transition: .2s;
+  opacity: .9;
+}
+/*
+.project-img:hover {
+  display: block;
+  margin: 0 auto;
+  width: 99%;
+  border-radius: 12px;
+}*/
+
+.project-title{
+  text-align: center;
+}/*
+.project-img{
+ color:#22acdd;
+}   line below, i just added transform and changed the opacity*/
+.project-img:focus,.project-img:hover{transform: scale(1.05);opacity:1;border:none;cursor:pointer;}
+
+
+.footer-content{
+  padding: 10px;
+  margin-top:20px;
+  background-color: #fafafa;
+  border-top: 1px solid #a6a6a6;
+}
+.git-log{
+  padding-top: 0px;
+  text-align: center;
+}
+.foot-img{
+   margin-left: 10px;
+   margin-right: 10px;
+
 }
 
-.description {}
-
-.price {
-    text-align: right;
-    width: 50%;
-    float: right;
+.noUnderline:hover {
+  text-decoration: none;
 }
 
-.editdeletepane {}
+.photoGetsLarger {
+  height: 25px;
+  width: 25px;
+  transition: all .15s;
+}
 
-.flash {
-    background: #cee5f5;
+.photoGetsLarger:hover {
+  transform: scale(1.1);
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-copyright {
+  margin-top: 8px;
+
+
+}
+
+@media screen and (max-width: 768px) {
+  .Work-Header{
+    text-align: center;
+  }
+  .img-box{
+    width: 75%;
+    height:75%;
+    margin: auto;
+    align-content: center;
+    border: thick;
+  }
 }
