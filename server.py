@@ -168,7 +168,9 @@ def gdisconnect():
         del login_session['picture']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash("You have been logged out!")
+        return redirect(url_for('showCategories'))
+
     else:
         response = make_response(json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
@@ -205,11 +207,13 @@ def getUserID(email):
 @app.route('/')
 @app.route('/categories/')
 def showCategories():
+    counter = 0
     categories = session.query(Categories).all()
     if 'username' not in login_session:
-        return render_template('publiccategories.html', categories=categories)
+        return render_template('publiccategories.html', categories=categories, counter=counter)
     else:
-        return render_template('categories.html', categories=categories)
+        user = session.query(User).filter_by(name=login_session['username']).one()
+        return render_template('categories.html', categories=categories, user=user)
 
 #python decorator
 #our function gets wrapped inside the @app.route function
@@ -287,7 +291,8 @@ def deleteCategory(category_id):
         return redirect('/login')
     categoryToDelete = session.query(Categories).filter_by(id = category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');window.location.assign('http://localhost:5000/categories/');}</script><body onload='myFunction()''>"
+        #reroute to homepage after this also.
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
