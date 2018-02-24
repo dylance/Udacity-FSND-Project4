@@ -16,10 +16,27 @@ body {
   padding-bottom: 30px;
 }
 .head-title {
-  text-align: right;
+  text-align: center;
   font-family: 'Nunito', sans-serif;
   font-weight: 500;
 }
+
+.login-btn {
+  text-align: right;
+  bottom:0;
+  right:0;
+}
+
+#heighty {
+  height: 98px;
+}
+#dylan {
+  color: green;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
 .main-img{
   opacity: .9;
 }
@@ -92,6 +109,10 @@ body {
 
 
 }
+.mainbox{
+  border: solid thin black;
+}
+
 
 @media screen and (max-width: 768px) {
   .Work-Header{
