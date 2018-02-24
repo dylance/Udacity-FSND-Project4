@@ -9,7 +9,7 @@ body {
 .header-page{
   border-bottom: 1px solid #a6a6a6;
   padding-bottom:2px;
-  margin:15px 0 15px;
+  margin:15px 0 0px;
 }
 .head-image {
   padding-top: 15px;
@@ -30,11 +30,21 @@ body {
 #heighty {
   height: 98px;
 }
+
+#welcome-message{
+  text-align: right;
+  margin-top: 15px;
+  float: right;
+}
 #dylan {
-  color: green;
+  color: white;
   position: absolute;
   left: 0;
   bottom: 0;
+}
+
+#center-flash{
+  text-align: center;
 }
 
 .main-img{
@@ -63,7 +73,14 @@ body {
 
 .project-title{
   text-align: center;
-}/*
+  border-radius: 10px;
+  background-color: #F0F8FF;
+  border: 1px solid #a6a6a6;
+}
+.project-title:hover{
+  background-color: #FFF5EE;
+  cursor:pointer;
+  color: black;}/*
 .project-img{
  color:#22acdd;
 }   line below, i just added transform and changed the opacity*/
@@ -72,7 +89,7 @@ body {
 
 .footer-content{
   padding: 10px;
-  margin-top:20px;
+  margin-top:0px;
   background-color: #fafafa;
   border-top: 1px solid #a6a6a6;
 }
@@ -81,8 +98,8 @@ body {
   text-align: center;
 }
 .foot-img{
-   margin-left: 10px;
-   margin-right: 10px;
+   margin-left: 0px;
+   margin-right: 0px;
 
 }
 
@@ -100,12 +117,14 @@ body {
   transform: scale(1.1);
 }
 
+
+
 .footer-content {
   text-align: center;
 }
 
 .footer-copyright {
-  margin-top: 8px;
+  margin-top: 10px;
 
 
 }
@@ -113,12 +132,15 @@ body {
   border: solid thin black;
 }
 
-
-@media screen and (max-width: 768px) {
-  .Work-Header{
-    text-align: center;
+.category-header{
+  border-radius: 10px;
+  text-align: center;
+  border-bottom: 1px solid #a6a6a6;
+  padding-bottom:2px;
+  margin:0px 0 0px;
+  background-color: #D5D5D5;
   }
-  .img-box{
+.img-box{
     width: 75%;
     height:75%;
     margin: auto;
