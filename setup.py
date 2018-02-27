@@ -8,7 +8,6 @@ setup(
         'flask',
         'sqlalchemy',
         'oauth2client',
-        'requests',
-        'flask-uploads'
+        'requests'        
     ],
 )
