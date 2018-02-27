@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Header -->
+<header class="container">
+	<div class="row header-page">
+		<div class="col-xs-3">
+			<img class="head-image" src="/static/de-logo-sm.png" alt="o">
+		</div> <div class="col-xs-6 ">
+				<h1 class="head-title">Item Catalog</h1>
+				<h4 class="head-title">Catalog for selling Items</h4>
+			</div>
+			<div id="heighty" class="col-xs-3">
+
+				 <a id="dylan" class="btn btn-info" href="{{url_for('showLogin')}}">Log in</a>
+			</div>
+	</div>
+</header>
+
+<div class="container">
+	<div class="row category-header">
+		<div class="col-md-12">
+			<h1 >{{category.category}}</h1>
+			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
+      Create New Item public page</a>
+		</div>
+	</div>
+</div>
+{% set count = [0] %}
+<div class="container">
+	<div class="row">
+		{% for i in items %}
+		{% if count[0] != 0 %}
+			{% if count[0] % 3 == 0  %}
+				</div>
+				<div class="row">
+			{% endif %}
+		{% endif %}
+	<!-- create variable to add new row after 3 attempts-->
+	<div class="col-sm-4 project-title">
+    <h3>{{i.item}}</h3>
+    <p>{{i.description}}</p>
+
+
+
+	</div>
+{% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
+{% endfor %}
+</div>
+
+
+
+
+<!-- end for indicates the end of a loop-->
+
+{% endblock %}
