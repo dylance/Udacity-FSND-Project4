@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='Udacity-FSND-Project4',
-    packages=['Udacity-FSND-Project4'],
+    name='course_catalog',
+    packages=['course_catalog'],
     include_package_data=True,
     install_requires=[
         'flask',
