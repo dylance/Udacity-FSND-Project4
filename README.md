@@ -15,6 +15,9 @@ Python 2
 1. install virtualenv
 `sudo pip install virtualenv`
 
+article explaining virtualenv and its importance: https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/
+
+
 2. clone this repository
 `git clone https://github.com/dylance/Udacity-FSND-Project4`
 
@@ -43,24 +46,3 @@ Python 2
 `python server.py`
 
 11. view server in browser localhost:5000/
-
-
-
-
-
-
-old instructions that I don't want to delete just yet
-
-install Vagrant VM
-install git
-install virtual box - https://www.virtualbox.org/wiki/Downloads - only the platform package is required. no need to launch after installation
-
-install vagrant https://www.vagrantup.com/downloads.html
-
-fork this repo https://github.com/udacity/OAuth2.0
-
-change direcoty into oath and run vagrant up
-
-type vagrant ssh
-
-cd /vagrant
