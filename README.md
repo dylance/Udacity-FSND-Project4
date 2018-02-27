@@ -2,7 +2,7 @@
 
 ## About
 
-This is the fourth project in Udacity Full Stack Web Developer Nanodegree. The project is an item catalog application that lets logged in users create cateogries and items for those categories. The program uses a Flask Server and sqlite databse to perform CRUD operations on data for the Item Catalog. The websites are built using the bootstrap framework.
+This is the fourth project in Udacity Full Stack Web Developer Nanodegree. The project is an item catalog application that lets logged in users create cateogries and items for those categories. The program uses a Flask Server and sqlite databse to perform CRUD operations on data for the Item Catalog. The webpages are built using the bootstrap framework.
 
 ## Requirements
 
