@@ -10,7 +10,8 @@
 				<h4 class="head-title">Catalog for selling Items</h4>
 			</div>
 			<div id="heighty" class="col-xs-3">
-				 <a id="dylan" class="login-btn" href="{{url_for('showLogin')}}">Log in</a>
+
+				 <a id="dylan" class="btn btn-info" href="{{url_for('showLogin')}}">Log in</a>
 			</div>
 	</div>
 </header>
@@ -20,68 +21,69 @@
 
 <ul>
 {% for message in messages %}
-	<li><strong>{{message}}</strong></li>
+	<li id="center-flash"><strong>{{message}}</strong></li>
 	{% endfor %}
 </ul>
 {% endif %}
 {% endwith %}
 <!--End MESSAGE FLASHING EXAMPLE -->
 <div class="container">
-
-
-<div class="row">
-	<div class="col-md-12">
-		<h1 class="Work-Header">Categories</h1>
-		<a href = '{{url_for('newCategory') }}'>
-		Create New Category</a>
+	<div class="row category-header">
+		<div class="col-md-12">
+			<h1 >Categoriessss</h1>
+			<a class="btn btn-info" href = '{{url_for('newCategory') }}'>Create New Category</a>
+		</div>
 	</div>
 </div>
-
-<div class="row">
-	{% for category in categories %}
+{% set count = [0] %}
+<div class="container">
+	<div class="row">
+		{% for category in categories %}
+		{% if count[0] != 0 %}
+			{% if count[0] % 3 == 0  %}
+				</div>
+				<div class="row">
+			{% endif %}
+		{% endif %}
 	<!-- create variable to add new row after 3 attempts-->
-		<div class="col-sm-4">
-
+	<div class="col-sm-4 project-title">
 		<a href = "{{url_for('showCategory', category_id = category.id)}}">
-						<h3>{{category.category}}</h3></a>
-            <p>{{category.description}}</p>
-						    </br>
-						</div>
+		<h3>{{category.category}}</h3></a>
+		<p>{{category.description}}</p>
+	
 
-	{% endfor %}
-</div>
+	</div>
+{% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
+{% endfor %}
 </div>
 
 <!-- Footer -->
-    <footer id="footy" class="footer footer-content">
-      <div class="row">
-        <div class="git-log col-lg-12">
-          <span class="foot-img">
-            <a class="noUnderline" href="https://github.com/dylance">
-              <img class="photoGetsLarger" src="img/links/git-sm.png" alt="github"/>
-            </a>
-          </span>
-          <span class="foot-img">
-            <a class="noUnderline" href="https://instagram.com/dylan_ellison_">
-              <img class="photoGetsLarger" src="img/links/instagram-sm.png" alt="instagram"/>
-            </a>
-          </span>
-          <span class="foot-img">
-            <a class="noUnderline" href="https://www.linkedin.com/in/dylan-ellison-1259a94a/">
-              <img class="photoGetsLarger" src="img/links/linkedin-sm.png" alt="linkedin"/>
-            </a>
-          </span>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p id="fixedCopy" class="footer-copyright">Copyright © Dylan Ellison 2017</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-
+	<footer id="footy" class="footer footer-content">
+		<div class="row">
+			<div class="git-log col-lg-12">
+				<span class="foot-img">
+					<a class="noUnderline" href="https://github.com/dylance">
+						<img class="photoGetsLarger" src="/static/git-sm.png" alt="github"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://instagram.com/dylan_ellison_">
+						<img class="photoGetsLarger" src="/static/instagram-sm.png" alt="instagram"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://www.linkedin.com/in/dylan-ellison-1259a94a/">
+						<img class="photoGetsLarger" src="/static/linkedin-sm.png" alt="linkedin"/>
+					</a>
+				</span>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p id="fixedCopy" class="footer-copyright">Copyright © Dylan Ellison 2018</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 {% endblock %}
 
 <!--

@@ -53,9 +53,9 @@
 		<h3>{{category.category}}</h3></a>
 		<p>{{category.description}}</p>
 		<a class="btn btn-info" href='{{url_for('editCategory', category_id = category.id) }}'>Edit</a>
-	<br>
+
 	<a class="btn btn-info" href = '{{url_for('deleteCategory', category_id = category.id) }}'>Delete</a>
-	</br>
+
 	</div>
 {% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
 {% endfor %}

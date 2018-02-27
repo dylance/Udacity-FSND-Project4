@@ -4,6 +4,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+/* code to make columns same height in a row */
+
+/*resume bootstrap */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -1582,10 +1587,11 @@ pre code {
   overflow-y: scroll;
 }
 .container {
-  padding-right: 100px; //changed from 15px
-  padding-left: 100px; //  changed from 15px
+  padding-right: 15px;
+  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+
 }
 @media (min-width: 768px) {
   .container {
@@ -1594,13 +1600,13 @@ pre code {
 }
 @media (min-width: 992px) {
   .container {
-    width: 800px; // changed from 970
+    width: 970px;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1000px; //changed from 1170
-  }
+    width: 1170px;
+    }
 }
 .container-fluid {
   padding-right: 15px;
@@ -5537,7 +5543,8 @@ button.list-group-item-danger.active:focus {
 .panel > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table:first-child > tbody:first-child > tr:first-child,
-.panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child {
+.panel > .table-responsive:first-child > .table:first-child > t
+:first-child > tr:first-child {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }

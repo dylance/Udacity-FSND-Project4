@@ -1,46 +1,56 @@
-<html>
-<head>
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-	</head>
-<body>
+{% extends "main.html" %}
+{% block content %}
 
-<h1>{{category.category}}</h1>
-<a href = '{{url_for('newItem', category_id = category.id) }}'>
-Create New Item</a>
+<!-- Header -->
+<header class="container">
+	<div class="row header-page">
+		<div class="col-xs-3">
+			<img class="head-image" src="/static/de-logo-sm.png" alt="o">
+		</div> <div class="col-xs-6 ">
+				<h1 class="head-title">Item Catalog</h1>
+				<h4 class="head-title">Catalog for selling Items</h4>
+			</div>
+			<div id="heighty" class="col-xs-3">
 
-<!--MESSAGE FLASHING EXAMPLE -->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
+				 <a id="dylan" class="btn btn-info" href="{{url_for('showLogin')}}">Log in</a>
+			</div>
+	</div>
+</header>
 
-<ul>
-{% for message in messages %}
-  <li><strong>{{message}}</strong></li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+<div class="container">
+	<div class="row category-header">
+		<div class="col-md-12">
+			<h1 >{{category.category}}</h1>
+			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
+      Create New Item public page</a>
+		</div>
+	</div>
+</div>
+{% set count = [0] %}
+<div class="container">
+	<div class="row">
+		{% for i in items %}
+		{% if count[0] != 0 %}
+			{% if count[0] % 3 == 0  %}
+				</div>
+				<div class="row">
+			{% endif %}
+		{% endif %}
+	<!-- create variable to add new row after 3 attempts-->
+	<div class="col-sm-4 project-title">
+    <h3>{{i.item}}</h3>
+    <p>{{i.description}}</p>
 
-<!-- single bracket is logical code. double bracket is printed code-->
-{% for i in items %}
-
-<div>
-
-<p>{{i.item}} - {{i.description}}</p>
-<!-- url for accepts function as first argument and arguments
-url for is useful because you don't have to remember to change url's all over application-->
 
 
-<a href='{{url_for('editItem', category_id = category.id, item_id = i.id) }}'>Edit</a>
-
-</br>
-
-<a href = '{{url_for('deleteItem', category_id = category.id, item_id = i.id) }}'>Delete</a>
-
-
+	</div>
+{% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
+{% endfor %}
 </div>
 
-<!-- end for indicates the end of a loop-->
-{% endfor %}
-</body>
 
-</html>
+
+
+<!-- end for indicates the end of a loop-->
+
+{% endblock %}
