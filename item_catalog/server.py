@@ -10,12 +10,6 @@ from flask import session as login_session
 import random
 import string
 
-#code for image upload
-from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
-
-
-
-
 # Imports for gonnect
 #flow_from_clientsecrets creates a flow object from clientsecrets JSON file
 #stores client ID and client secretsecret
@@ -384,30 +378,6 @@ def restaurantMenuJSON(category_id):
 def menuItemJSON(category_id, item_id):
     item = session.query(Items).filter_by(id=item_id).one()
     return jsonify(Items=item.serialize)
-
-"""  code attempted for image upload
-photos = UploadSet('photos', IMAGES)
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        rec = Photo(filename=filename, user=g.user.id)
-        rec.store()
-        flash("Photo saved.")
-        return redirect(url_for('show', id=rec.id))
-    return render_template('upload.html')
-
-@app.route('/photo/<id>')
-def show(id):
-    photo = Photo.load(id)
-    if photo is None:
-        abort(404)
-    url = photos.url(photo.filename)
-    return render_template('show.html', url=url, photo=photo)
-"""
-
-
 
 #the app run by python interpreter gets a variable set to __main__
 #imported python code gets named __<file name>__
