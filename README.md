@@ -33,8 +33,8 @@ article explaining virtualenv and its importance: https://www.dabapps.com/blog/i
 6. install dependencies
 `pip install --editable .`
 
-7. change directory into course_catalog
-`cd course_catalog`
+7. change directory into item_catalog
+`cd item_catalog`
 
 8. set up db
 `python database_setup.py`
