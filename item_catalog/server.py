@@ -227,7 +227,8 @@ def showCategory(category_id):
     if 'username' not in login_session or creator.id != login_session['user_id']:
         return render_template('publiccategory_items.html',category=category, items=items, creator=creator)
     else:
-        return render_template('category_items.html', category=category, items=items, creator=creator)
+        user = session.query(User).filter_by(name=login_session['username']).one()
+        return render_template('category_items.html', category=category, items=items, creator=creator, user=user)
 
 
     #look up query method for sql alchemy. dbSession.query
@@ -241,17 +242,6 @@ def showCategory(category_id):
         output += i.description
         output += '</br></br>'
     return output"""
-#test function I made to print out all categories
-@app.route('/test')
-def showCategories2():
-    #look up query method for sql alchemy. dbSession.query
-    category1 = session.query(Categories).all()
-
-    output = ''
-    for i in category1:
-        output += i.category
-        output += '</br>'
-    return output
 
 @app.route('/category/new/', methods=['GET', 'POST'])
 def newCategory():
@@ -273,8 +263,9 @@ def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedCategory = session.query(Categories).filter_by(id = category_id).one()
+    print editedCategory.description
     if editedCategory.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit this Category');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['category']:
             editedCategory.category = request.form['category']
@@ -293,7 +284,7 @@ def deleteCategory(category_id):
     categoryToDelete = session.query(Categories).filter_by(id = category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
         # link found on JS redirect https://appendto.com/2016/04/javascript-redirect-how-to-redirect-a-web-page-with-javascript/
-        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');window.location.assign('http://localhost:5000/categories/');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete this Category.');window.location.assign('http://localhost:5000/categories/');}</script><body onload='myFunction()''>"
         #reroute to homepage after this also.
     if request.method == 'POST':
         session.delete(categoryToDelete)
@@ -329,10 +320,11 @@ def editItem(category_id, item_id):
     editedItem = session.query(Items).filter_by(id=item_id).one()
     category = session.query(Categories).filter_by(id=category_id).one()
     if login_session['user_id'] != category.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit menu items in this restaurant. Please create your own category in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method== 'POST':
         if request.form['item']:
             editedItem.item = request.form['item']
+            editedItem.description = request.form['description']
         session.add(editedItem)
         session.commit()
         flash("Item was edited!")
@@ -354,7 +346,7 @@ def deleteItem(category_id, item_id):
     itemToDelete = session.query(Items).filter_by(id=item_id).one()
     category = session.query(Categories).filter_by(id=category_id).one()
     if login_session['user_id'] != category.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete items in this category.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
@@ -367,7 +359,7 @@ def deleteItem(category_id, item_id):
 
 #JSON endpoints
 @app.route('/category/<int:category_id>/JSON')
-def restaurantMenuJSON(category_id):
+def categoryJSON(category_id):
     category = session.query(Categories).filter_by(id=category_id).one()
     items = session.query(Items).filter_by(
         category_id=category.id).all()
@@ -375,7 +367,7 @@ def restaurantMenuJSON(category_id):
 
 
 @app.route('/category/<int:category_id>/<int:item_id>/JSON')
-def menuItemJSON(category_id, item_id):
+def categoryItemJSON(category_id, item_id):
     item = session.query(Items).filter_by(id=item_id).one()
     return jsonify(Items=item.serialize)
 
