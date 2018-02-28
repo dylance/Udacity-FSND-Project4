@@ -1,4 +1,4 @@
-# Udacity Full Stack Web Developer Item Catalog
+# Item Catalog
 
 ## About
 
