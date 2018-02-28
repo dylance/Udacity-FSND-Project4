@@ -30,7 +30,7 @@
 <div class="container">
 	<div class="row category-header">
 		<div class="col-md-12">
-			<h1 >Categoriessss</h1>
+			<h1 >Categories</h1>
 			<a class="btn btn-info" href = '{{url_for('newCategory') }}'>Create New Category</a>
 		</div>
 	</div>
@@ -50,7 +50,7 @@
 		<a href = "{{url_for('showCategory', category_id = category.id)}}">
 		<h3>{{category.category}}</h3></a>
 		<p>{{category.description}}</p>
-	
+
 
 	</div>
 {% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}

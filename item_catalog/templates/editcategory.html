@@ -1,23 +1,16 @@
 <html>
-<head>
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+	<head>
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 	</head>
-<body>
-<h1> Edit Category</h1>
-
-<form action="{{url_for('editCategory', category_id=category_id)}}" method = 'POST'>
-
-<p>Category name:</p>
-
-<input type='text' size='30' name='category'>
-
-<p>Category description:</p>
-
-<input type='text' size='30' name='description'>
-
-<input type='submit' value='Create'>
-
-</form>
-<a href= '{{url_for('showCategories')}}'>Cancel</a>
-</body>
+	<body>
+		<h1> Edit Category</h1>
+		<form action="{{url_for('editCategory', category_id=category_id)}}" method = 'POST'>
+			<p>Category name:</p>
+			<input type='text' size='30' name='category' placeholder={{category.category}}>
+			<p>Category description:</p>
+			<input type='text' size='30' name='description' placeholder={{category.description}}>
+			<input type='submit' value='Create'>
+		</form>
+		<a href= '{{url_for('showCategories')}}'>Cancel</a>
+	</body>
 </html>

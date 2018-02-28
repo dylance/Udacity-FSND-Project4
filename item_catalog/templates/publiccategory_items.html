@@ -22,7 +22,7 @@
 		<div class="col-md-12">
 			<h1 >{{category.category}}</h1>
 			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
-      Create New Item public page</a>
+      Log in to create new item</a>
 		</div>
 	</div>
 </div>
@@ -47,6 +47,33 @@
 {% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
 {% endfor %}
 </div>
+<!-- Footer -->
+	<footer id="footy" class="footer footer-content">
+		<div class="row">
+			<div class="git-log col-lg-12">
+				<span class="foot-img">
+					<a class="noUnderline" href="https://github.com/dylance">
+						<img class="photoGetsLarger" src="/static/git-sm.png" alt="github"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://instagram.com/dylan_ellison_">
+						<img class="photoGetsLarger" src="/static/instagram-sm.png" alt="instagram"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://www.linkedin.com/in/dylan-ellison-1259a94a/">
+						<img class="photoGetsLarger" src="/static/linkedin-sm.png" alt="linkedin"/>
+					</a>
+				</span>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p id="fixedCopy" class="footer-copyright">Copyright © Dylan Ellison 2018</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 
 

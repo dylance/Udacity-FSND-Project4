@@ -1,3 +1,125 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Header -->
+<header class="container">
+	<div class="row header-page">
+		<div class="col-xs-3">
+			<img class="head-image" src="/static/de-logo-sm.png" alt="o">
+		</div> <div class="col-xs-6 ">
+				<h1 class="head-title">Item Catalog</h1>
+				<h4 class="head-title">Catalog for selling Items</h4>
+			</div>
+			<div id="heighty" class="col-xs-3">
+				<id="welcome-message" p>Welcome, {{user.name}}!!</p>
+				<!--<img src="{{user.picture}}" alt=""> -->
+				<a id="dylan" class="login-btn btn btn-info" href="{{url_for('gdisconnect')}}">Log out</a>
+			</div>
+	</div>
+</header>
+
+<div class="container">
+	<div class="row category-header">
+		<div class="col-md-12">
+			<h1 >{{category.category}}</h1>
+			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
+      Create New Item</a>
+		</div>
+	</div>
+</div>
+{% set count = [0] %}
+<div class="container">
+	<div class="row">
+		{% for i in items %}
+		{% if count[0] != 0 %}
+			{% if count[0] % 3 == 0  %}
+				</div>
+				<div class="row">
+			{% endif %}
+		{% endif %}
+	<!-- create variable to add new row after 3 attempts-->
+	<div class="col-sm-4 project-title">
+    <h3>{{i.item}}</h3>
+    <p>{{i.description}}</p>
+
+		<a class="btn btn-info" href='{{url_for('editItem', category_id = category.id, item_id = i.id) }}'>Edit</a>
+		<a class="btn btn-info" href = '{{url_for('deleteItem', category_id = category.id, item_id = i.id) }}'>Delete</a>
+
+	</div>
+{% if count.append(count.pop() + 1) %}{% endif %} {# increment count by 1 #}
+{% endfor %}
+</div>
+<!-- Footer -->
+	<footer>
+		<div class="footer-content container">
+
+		
+		<div class="row">
+			<div class="git-log col-lg-12">
+				<span class="foot-img">
+					<a class="noUnderline" href="https://github.com/dylance">
+						<img class="photoGetsLarger" src="/static/git-sm.png" alt="github"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://instagram.com/dylan_ellison_">
+						<img class="photoGetsLarger" src="/static/instagram-sm.png" alt="instagram"/>
+					</a>
+				</span>
+				<span class="foot-img">
+					<a class="noUnderline" href="https://www.linkedin.com/in/dylan-ellison-1259a94a/">
+						<img class="photoGetsLarger" src="/static/linkedin-sm.png" alt="linkedin"/>
+					</a>
+				</span>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p id="fixedCopy" class="footer-copyright">Copyright © Dylan Ellison 2018</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</footer>
+
+
+
+
+<!-- end for indicates the end of a loop-->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <html>
 <head>
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
