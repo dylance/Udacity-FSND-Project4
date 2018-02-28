@@ -2,7 +2,7 @@
 
 ## About
 
-This is the fourth project for the Full Stack Web Developer Nanodegree program from Udacity. The project is an item catalog web application allowing authenticated users to perform CRUD operations within a relational database. A google+ OAuth 2.0 sign in is used to authenticate users. Authenticated Users can create, update and delete items from the catalog using a local permissioin system allowing only users that created an item or category to edit or delete. JSON endpoints are provided for all items in the database.
+This is the fourth project in the Full Stack Web Developer Nanodegree program from Udacity. The project is a web application item catalog allowing authenticated users to perform CRUD operations within a relational database. A google+ OAuth 2.0 sign in is used to authenticate users. Authenticated Users can create, update and delete items from the catalog using a local permissioin system allowing only users that created an item or category to edit or delete that item. JSON endpoints are provided for all items in the database with their respective HTTP links.
 
 The app is built with the Flask web framework and uses a SQLite database. The webpages are styled with the bootstrap CSS framework.
 
