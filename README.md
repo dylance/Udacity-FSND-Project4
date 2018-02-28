@@ -46,7 +46,7 @@ article explaining virtualenv and its importance: https://www.dabapps.com/blog/i
 10. run server
 `python server.py`
 
-11. view server in browser localhost:8000/
+11. view server in browser at localhost:8000/
 
 ## Creator
 Dylan Ellison
