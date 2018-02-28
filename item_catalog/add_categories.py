@@ -22,76 +22,76 @@ session = DBSession()
 # Add original user
 
 User1 = User(name="Dylan Ellison", email="dylancellison@gmail.com",
-            picture='https://avatars2.githubusercontent.com/u/17778111?s=400&u=dccdea06297fbb8f57c6e37b0d36ab83eedec2db&v=4')
+             picture='https://avatars2.githubusercontent.com/u/17778111?s=400&u=dccdea06297fbb8f57c6e37b0d36ab83eedec2db&v=4')
 session.add(User1)
 session.commit()
 
-#Category for Snowboarding
-category1 = Categories(user_id=1, category = "Snowboarding", description = "extreme downhill sport on snow")
+# Category for Snowboarding
+category1 = Categories(user_id=1, category="Snowboarding", description="extreme downhill sport on snow")
 
 session.add(category1)
 session.commit()
 
 
-Item1 = Items(user_id=1, item = "Burton Custom", description = "all terrain freestyle board",  category = category1)
+Item1 = Items(user_id=1, item="Burton Custom", description="all terrain freestyle board",  category=category1)
 
 session.add(Item1)
 session.commit()
 
-Item2 = Items(user_id=1, item = "Burton Vapor", description = "The only board Erik Brown will ride",  category = category1)
+Item2 = Items(user_id=1, item="Burton Vapor", description="The only board Erik Brown will ride",  category=category1)
 
 session.add(Item2)
 session.commit()
 
-Item3 = Items(user_id=1, item = "Lobster snowboard", description = "Haldor jibs on this",  category = category1)
+Item3 = Items(user_id=1, item="Lobster snowboard", description="Haldor jibs on this",  category=category1)
 
 session.add(Item3)
 session.commit()
 
-#cateogory for surfing
-category2 = Categories(user_id=1, category = "Surfing", description = "Riding ocean waves as they break on a board with fins")
+# cateogory for surfing
+category2 = Categories(user_id=1, category="Surfing", description="Riding ocean waves as they break on a board with fins")
 
 session.add(category2)
 session.commit()
 
 
-Item1 = Items(user_id=1, item = "Al Merrick flyer", description = "good all around board",  category = category2)
+Item1 = Items(user_id=1, item="Al Merrick flyer", description="good all around board",  category=category2)
 
 session.add(Item1)
 session.commit()
 
-Item2 = Items(user_id=1, item = "Costco Wavestorm", description = "the best board out there. period.",  category = category2)
+Item2 = Items(user_id=1, item="Costco Wavestorm", description="the best board out there. period.",  category=category2)
 
 session.add(Item2)
 session.commit()
 
-Item3 = Items(user_id=1, item = "lost round nose fish", description = "everyone needs this in their quiver",  category = category2)
+Item3 = Items(user_id=1, item="lost round nose fish", description="everyone needs this in their quiver",  category=category2)
 
 session.add(Item3)
 session.commit()
 
 
-#category for skateboarding
-category3 = Categories(user_id=1, category = "Skateboarding", description = "surfing on concrete")
+# category for skateboarding
+category3 = Categories(user_id=1, category="Skateboarding", description="surfing on concrete")
 
 session.add(category3)
 session.commit()
 
 
-Item1 = Items(user_id=1, item = "Tom Penny board", description = "most elusive pro skater to ever live",  category = category3)
+Item1 = Items(user_id=1, item="Tom Penny board", description="most elusive pro skater to ever live",  category=category3)
 
 session.add(Item1)
 session.commit()
 
-Item2 = Items(user_id=1, item = "bones bearings", description = "the best bearings",  category = category3)
+Item2 = Items(user_id=1, item="bones bearings", description="the best bearings",  category=category3)
 
 session.add(Item2)
 session.commit()
 
-Item3 = Items(user_id=1, item = "independent trucks", description = "the best trucks",  category = category3)
+Item3 = Items(user_id=1, item="independent trucks", description="the best trucks",  category=category3)
 
 session.add(Item3)
 session.commit()
 
 
-print "added menu items!"
+print "added items!"

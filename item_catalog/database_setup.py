@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+
 class User(Base):
     __tablename__ = 'user'
 
@@ -25,7 +26,7 @@ class Categories(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
-    #add serialize function for JSON
+    # add serialize function for JSON
 
 
 class Items(Base):

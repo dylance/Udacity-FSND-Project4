@@ -3,31 +3,30 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items, User
 
-#imports for creating log in
+# imports for creating log in
 # session is renamed login_session because we already have an instance of session
-#session works like a dictionary to store values for as long as a session with a server exists
+# session works like a dictionary to store values for as long as a session with a server exists
 from flask import session as login_session
 import random
 import string
 
 # Imports for gonnect
-#flow_from_clientsecrets creates a flow object from clientsecrets JSON file
-#stores client ID and client secretsecret
+# flow_from_clientsecrets creates a flow object from clientsecrets JSON file
+# stores client ID and client secretsecret
 from oauth2client.client import flow_from_clientsecrets
-#used if run into an error exchanging auth. code for access token
+# used if run into an error exchanging auth. code for access token
 from oauth2client.client import FlowExchangeError
 import httplib2
 import json
-#converts return value from function into response object that can be sent to client
+# converts return value from function into response object that can be sent to client
 from flask import make_response
 import requests
 
 
-#name of running application is argument
-#find out more about __name__ in python
-#anytime run an app in python __name__ gets run and used for app and all imports used
+# name of running application is argument
+# find out more about __name__ in python
+# anytime run an app in python __name__ gets run and used for app and all imports used
 app = Flask(__name__)
-
 
 
 CLIENT_ID = json.loads(
@@ -55,6 +54,7 @@ def showLogin():
     print login_session
     print "The current session state is %s" % (login_session['state'])
     return render_template('login.html',  STATE=state)
+
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -128,7 +128,7 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-    #see if user exists, if it doesn't make a new one
+    # see if user exists, if it doesn't make a new one
     user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
@@ -144,6 +144,7 @@ def gconnect():
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
+
 
 @app.route('/gdisconnect')
 def gdisconnect():
@@ -202,8 +203,6 @@ def getUserID(email):
         return None
 
 
-
-
 # Show all categories
 @app.route('/')
 @app.route('/categories/')
@@ -216,8 +215,9 @@ def showCategories():
         user = session.query(User).filter_by(name=login_session['username']).one()
         return render_template('categories.html', categories=categories, user=user)
 
-#python decorator
-#our function gets wrapped inside the @app.route function
+
+# python decorator
+# our function gets wrapped inside the @app.route function
 @app.route('/category/<int:category_id>/')
 def showCategory(category_id):
 
@@ -225,32 +225,20 @@ def showCategory(category_id):
     creator = getUserInfo(category.user_id)
     items = session.query(Items).filter_by(category_id=category.id)
     if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publiccategory_items.html',category=category, items=items, creator=creator)
+        return render_template('publiccategory_items.html', category=category, items=items, creator=creator)
     else:
         user = session.query(User).filter_by(name=login_session['username']).one()
         return render_template('category_items.html', category=category, items=items, creator=creator, user=user)
 
-
-    #look up query method for sql alchemy. dbSession.query
-    #query to view items from category with custom url
-    """category1 = session.query(Categories).first()
-    items = session.query(Items).filter_by(category_id=category1.id)
-    output = ''
-    for i in items:
-        output += i.item
-        output += " - "
-        output += i.description
-        output += '</br></br>'
-    return output"""
 
 @app.route('/category/new/', methods=['GET', 'POST'])
 def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        #printed login_session object to look at it :)
+        # printed login_session object to look at it :)
         print login_session
-        newCategory = Categories(category=request.form['category'], description=request.form['description'],user_id=login_session['user_id'])
+        newCategory = Categories(category=request.form['category'], description=request.form['description'], user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         flash("new category created!")
@@ -258,11 +246,12 @@ def newCategory():
     else:
         return render_template('newcategory.html')
 
+
 @app.route('/category/<int:category_id>/edit/', methods=['GET', 'POST'])
 def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
-    editedCategory = session.query(Categories).filter_by(id = category_id).one()
+    editedCategory = session.query(Categories).filter_by(id=category_id).one()
     print editedCategory.description
     if editedCategory.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not authorized to edit this Category');}</script><body onload='myFunction()''>"
@@ -277,15 +266,16 @@ def editCategory(category_id):
     else:
         return render_template('editcategory.html', category_id=editedCategory.id, category=editedCategory)
 
+
 @app.route('/category/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
-    categoryToDelete = session.query(Categories).filter_by(id = category_id).one()
+    categoryToDelete = session.query(Categories).filter_by(id=category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
         # link found on JS redirect https://appendto.com/2016/04/javascript-redirect-how-to-redirect-a-web-page-with-javascript/
         return "<script>function myFunction() {alert('You are not authorized to delete this Category.');window.location.assign('http://localhost:5000/categories/');}</script><body onload='myFunction()''>"
-        #reroute to homepage after this also.
+        # reroute to homepage after this also.
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
@@ -297,7 +287,7 @@ def deleteCategory(category_id):
 
 @app.route('/category/<int:category_id>/new/', methods=['GET', 'POST'])
 def newItem(category_id):
-    #checks to see if user is logged in
+    # checks to see if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
@@ -306,22 +296,21 @@ def newItem(category_id):
         session.add(newItem)
         session.commit()
         flash("new item created!")
-        return redirect(url_for('showCategory', category_id=category_id ))
+        return redirect(url_for('showCategory', category_id=category_id))
     else:
         return render_template('newitem.html', category_id=category_id)
 
-# Task 2: Create route for editMenuItem function here
 
 @app.route('/category/<int:category_id>/<int:item_id>/edit/', methods=['GET', 'POST'])
 def editItem(category_id, item_id):
-    #checks to see if user is logged in
+    # checks to see if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
     editedItem = session.query(Items).filter_by(id=item_id).one()
     category = session.query(Categories).filter_by(id=category_id).one()
     if login_session['user_id'] != category.user_id:
         return "<script>function myFunction() {alert('You are not authorized to edit menu items in this restaurant. Please create your own category in order to edit items.');}</script><body onload='myFunction()''>"
-    if request.method== 'POST':
+    if request.method == 'POST':
         if request.form['item']:
             editedItem.item = request.form['item']
             editedItem.description = request.form['description']
@@ -333,14 +322,9 @@ def editItem(category_id, item_id):
         return render_template('edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
 
 
-
-
-
-# Task 3: Create a route for deleteMenuItem function here
-
 @app.route('/category/<int:category_id>/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
-    #checks to see if user is logged in
+    # checks to see if user is logged in
     if 'username' not in login_session:
         return redirect('/login')
     itemToDelete = session.query(Items).filter_by(id=item_id).one()
@@ -353,11 +337,10 @@ def deleteItem(category_id, item_id):
         flash("Item was deleted")
         return redirect(url_for('showCategory', category_id=category_id))
     else:
-        return render_template('deleteitem.html', category_id=category_id,item=itemToDelete)
+        return render_template('deleteitem.html', category_id=category_id, item=itemToDelete)
 
 
-
-#JSON endpoints
+# JSON endpoints
 @app.route('/category/<int:category_id>/JSON')
 def categoryJSON(category_id):
     category = session.query(Categories).filter_by(id=category_id).one()
@@ -371,11 +354,11 @@ def categoryItemJSON(category_id, item_id):
     item = session.query(Items).filter_by(id=item_id).one()
     return jsonify(Items=item.serialize)
 
-#the app run by python interpreter gets a variable set to __main__
-#imported python code gets named __<file name>__
+# the app run by python interpreter gets a variable set to __main__
+# imported python code gets named __<file name>__
 if __name__ == '__main__':
     app.secret_key = 'secretkey'
-    #allows server to reload itself each time it notices a code change
-    #provides debugger in browser also
+    # allows server to reload itself each time it notices a code change
+    # provides debugger in browser also
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
