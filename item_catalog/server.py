@@ -274,7 +274,7 @@ def deleteCategory(category_id):
     categoryToDelete = session.query(Categories).filter_by(id=category_id).one()
     if categoryToDelete.user_id != login_session['user_id']:
         # link found on JS redirect https://appendto.com/2016/04/javascript-redirect-how-to-redirect-a-web-page-with-javascript/
-        return "<script>function myFunction() {alert('You are not authorized to delete this Category.');window.location.assign('http://localhost:5000/categories/');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete this Category.');window.location.assign('http://localhost:8000/categories/');}</script><body onload='myFunction()''>"
         # reroute to homepage after this also.
     if request.method == 'POST':
         session.delete(categoryToDelete)
@@ -361,4 +361,4 @@ if __name__ == '__main__':
     # allows server to reload itself each time it notices a code change
     # provides debugger in browser also
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)
