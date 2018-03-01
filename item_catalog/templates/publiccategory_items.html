@@ -23,6 +23,7 @@
 			<h1 >{{category.category}}</h1>
 			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
       Log in to create new item</a>
+			<a class="btn btn-info" href="{{url_for('showCategories')}}">See all Categories</a>
 		</div>
 	</div>
 </div>

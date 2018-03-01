@@ -22,8 +22,8 @@
 	<div class="row category-header">
 		<div class="col-md-12">
 			<h1 >{{category.category}}</h1>
-			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>
-      Create New Item</a>
+			<a class="btn btn-info" href = '{{url_for('newItem', category_id = category.id) }}'>Create New Item</a>
+			<a class="btn btn-info" href="{{url_for('showCategories')}}">See all Categories</a>
 		</div>
 	</div>
 </div>
@@ -53,7 +53,7 @@
 	<footer>
 		<div class="footer-content container">
 
-		
+
 		<div class="row">
 			<div class="git-log col-lg-12">
 				<span class="foot-img">
