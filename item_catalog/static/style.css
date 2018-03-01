@@ -7,7 +7,7 @@ body {
     display: inline-block;
 }
 .header-page{
-  
+
   padding-bottom:2px;
   margin:15px 0 0px;
 }
@@ -92,6 +92,7 @@ body {
   margin-top:0px;
   background-color: #fafafa;
   border-top: 1px solid #a6a6a6;
+  border-radius: 10px;
 }
 .git-log{
   padding-top: 0px;
