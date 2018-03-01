@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy import create_engine
 
 from sqlalchemy.orm import sessionmaker
@@ -26,8 +26,6 @@ class Categories(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
-    # add serialize function for JSON
-
 
 class Items(Base):
     __tablename__ = 'items'
@@ -36,7 +34,8 @@ class Items(Base):
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
     category_id = Column(Integer, ForeignKey('categories.id'))
-    category = relationship(Categories)
+    category = relationship(
+            "Categories", backref=backref("items", cascade="all, delete"))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -52,8 +51,7 @@ class Items(Base):
 
         }
 
-
-engine = create_engine('sqlite:///db-with-user.db')
+engine = create_engine('sqlite:///item_catalog.db')
 
 
 Base.metadata.create_all(engine)

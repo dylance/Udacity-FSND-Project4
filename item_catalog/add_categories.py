@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, Items, User
 
 
-engine = create_engine('sqlite:///db-with-user.db')
+engine = create_engine('sqlite:///item_catlog.db')
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
@@ -22,8 +22,8 @@ session = DBSession()
 # Add original user
 
 User1 = User(name="Dylan Ellison", email="dylancellison@gmail.com",
-             picture=("https://avatars2.githubusercontent.com/u/17778111"
-                      "?s=400&u=dccdea06297fbb8f57c6e37b0d36ab83eedec2db&v=4"))
+             picture="https://avatars2.githubusercontent.com/u/17")
+
 
 session.add(User1)
 session.commit()
